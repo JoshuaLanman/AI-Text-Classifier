@@ -24,10 +24,10 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 lemmatizer = WordNetLemmatizer()
 
-class CustomTokenizer:
+class Custom_Tokenizer:
 
 # Custom tokenizer function to remove stopwords and use lemmatization
-    def customTokenizer(str):
+    def custom_tokenizer(self, str):
         # Split string into tokens
         tokens=nltk.word_tokenize(str)
         
