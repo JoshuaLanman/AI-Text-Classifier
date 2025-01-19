@@ -79,6 +79,9 @@ SUPPORTED_FUNCTIONS = [SPAM_OR_HAM]
 MESSAGES = 'messages'
 FUNCTION = 'function'
 SPAM_OR_HAM_FIELDS = [FUNCTION, MESSAGES]
+EMPTY_STRING = ''
+EMPTY_DICT = {}
+EMPTY_LIST = []
 
 
 def lambda_handler(event, context=None):
@@ -122,6 +125,8 @@ def lambda_handler(event, context=None):
     except Exception as e:
         return {
             STATUS_CODE: STATUS_CODE_BAD_REQUEST,
+            FUNCTION: SPAM_OR_HAM,
+            RESPONSES: EMPTY_DICT,
             ERRORS: [str(e)]
         }    
 
@@ -136,84 +141,79 @@ def event_is_valid(event):
         dict: A JSON object containing the status code and error information if the
             request fails. Otherwise, None is returned.
     """
+
+    error_response = {
+        STATUS_CODE: STATUS_CODE_BAD_REQUEST,
+        FUNCTION: EMPTY_STRING,
+        RESPONSES: EMPTY_DICT,
+        ERRORS: EMPTY_LIST
+    }
+
     # Validate that the event was provided, is a dictionary, and is not empty
     if event is None:
-        return {
-            STATUS_CODE: STATUS_CODE_BAD_REQUEST,
-            ERRORS: ['Event object is missing']
-        }
+        error_response[ERRORS].append('Event object is missing')
+        return error_response
     
     if not isinstance(event, dict):
-        return {
-            STATUS_CODE: STATUS_CODE_BAD_REQUEST,
-            ERRORS: ['Event object is not a dictionary']
-        }
+        error_response[ERRORS].append('Event object is not a dictionary')
+        return error_response
     
     if len(event) == 0:
-        return {
-            STATUS_CODE: STATUS_CODE_BAD_REQUEST,
-            ERRORS: ['Event object is empty']
-        }
+        error_response[ERRORS].append('Event object is empty')
+        return error_response
     
-    # Validate the function field exists, is a string, and contains a valid function name
+    
+# Validate the function field exists, is a string, and contains a valid function name
     if FUNCTION not in event:
-        return {
-            STATUS_CODE: STATUS_CODE_BAD_REQUEST,
-            ERRORS: ['Function field is required']
-        }
+        error_response[ERRORS].append('Function field is required')
+        return error_response
     
     if not isinstance(event[FUNCTION], str):
-        return {
-            STATUS_CODE: STATUS_CODE_BAD_REQUEST,
-            ERRORS: ['Function field must be a string']
-        }
+        error_response[ERRORS].append('Function field must be a string')
+        return error_response
     
     function_name = event[FUNCTION]
     if function_name not in SUPPORTED_FUNCTIONS:
-        return {
-            STATUS_CODE: STATUS_CODE_BAD_REQUEST,
-            ERRORS: [f'Invalid function name: {function_name}']
-        }
+        error_response[ERRORS].append(f'Invalid function name: {function_name}')
+        return error_response
 
     # Validate the remaining event fields based on the selected function
     if function_name == SPAM_OR_HAM:
+        error_response[FUNCTION] = SPAM_OR_HAM
+
         # Validate that the event contains the required fields for the selected function,
         # that the fields are of the correct type, and that they are not empty.
         # This includes verifying that no additional fields are present
-        status_code = STATUS_CODE_SUCCESS
-        field_errors = []
+        field_errors = False
 
         # Validate the Messages field
         if MESSAGES not in event:
-            status_code = STATUS_CODE_BAD_REQUEST
-            field_errors.append('Messages field is required')
+            field_errors = True
+            error_response[ERRORS].append('Messages field is required')
         else:
             if not isinstance(event[MESSAGES], list):
-                status_code = STATUS_CODE_BAD_REQUEST
-                field_errors.append('Messages field must be a list')
+                field_errors = True
+                error_response[ERRORS].append('Messages field must be a list')
             elif len(event[MESSAGES]) == 0:
-                status_code = STATUS_CODE_BAD_REQUEST
-                field_errors.append('Messages field must contain at least one message')
+                field_errors = True
+                error_response[ERRORS].append('Messages field must contain at least one message')
             else:
                 messages = event[MESSAGES]
                 for message in messages:
                     if not isinstance(message, str):
-                        status_code = STATUS_CODE_BAD_REQUEST
-                        field_errors.append('Messages field contains an invalid message; all messages must be strings')
+                        field_errors = True
+                        error_response[ERRORS].append('Messages field contains an invalid message; all messages must be strings')
                         break
 
         # Verify that no additional fields are present
         for key in event:
             if key not in SPAM_OR_HAM_FIELDS:
-                status_code = STATUS_CODE_BAD_REQUEST
-                field_errors.append(f'Invalid field in event: {key}')
+                field_errors = True
+                error_response[ERRORS].append(f'Invalid field in event: {key}')
         
         # If any field validations have failed, return the error response
-        if status_code != STATUS_CODE_SUCCESS:
-            return {
-                STATUS_CODE: status_code,
-                ERRORS: field_errors
-            }
+        if field_errors:
+            return error_response
         
     return None
 
@@ -269,6 +269,8 @@ def main():
         except Exception as e:
             return {
                 STATUS_CODE: STATUS_CODE_BAD_REQUEST,
+                FUNCTION: EMPTY_STRING,
+                RESPONSES: EMPTY_DICT,
                 ERRORS: [f'Unable to parse event object: {str(e)}']
             }
         
@@ -276,6 +278,8 @@ def main():
     else:
         return {
                 STATUS_CODE: STATUS_CODE_BAD_REQUEST,
+                FUNCTION: EMPTY_STRING,
+                RESPONSES: EMPTY_DICT,
                 ERRORS: [f'No JSON-encoded event object provided. Use the --event argument to provide an event object']
             }
 

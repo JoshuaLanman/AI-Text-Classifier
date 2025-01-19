@@ -26,14 +26,14 @@ lemmatizer = WordNetLemmatizer()
 
 class Custom_Tokenizer:
 
-# Custom tokenizer function to remove stopwords and use lemmatization
-    def custom_tokenizer(self, str):
-        # Split string into tokens
-        tokens=nltk.word_tokenize(str)
-        
-        # Filter for stopwords
-        nostop = list(filter(lambda token: token not in stopwords.words('english'), tokens))
-        
-        # Perform lemmatization
-        lemmatized=[lemmatizer.lemmatize(word) for word in nostop]
-        return lemmatized
+   # Custom tokenizer function to remove stopwords and use lemmatization
+   def custom_tokenizer(self, str):
+         # Split string into tokens
+         tokens=nltk.word_tokenize(str)
+         
+         # Filter for stopwords
+         nostop = list(filter(lambda token: token not in stopwords.words('english'), tokens))
+         
+         # Perform lemmatization
+         lemmatized=[lemmatizer.lemmatize(word) for word in nostop]
+         return lemmatized
