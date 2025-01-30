@@ -12,6 +12,7 @@
    6. [Testing and Validation](#6-testing-and-validation)
    7. [Documentation and Cleanup](#7-documentation-and-cleanup)
 * [Resources](#resources)
+* [License](#license)
 
 ## Introduction
 
@@ -283,3 +284,7 @@ This list serves as a single point of reference for all of the resources mention
 * [Adding Python Packages with Compiled Binaries to Lambda](https://repost.aws/knowledge-center/lambda-python-package-compatible)
 * [Natural Language Tool Kit (NLTK): Installing NLTK](https://www.nltk.org/install.html)
 * [Natural Language Tool Kit (NLTK): Installing NLTK Data](https://www.nltk.org/data.html)
+
+## License
+
+[AI Text Classifier Tool](https://github.com/JoshuaLanman/AI-Text-Classifier) © 2025 by [Joshua Lanman](https://github.com/JoshuaLanman/) is licensed under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/). You may download and use this code locally for personal purposes only. Commercial use, modification, or distribution is prohibited.

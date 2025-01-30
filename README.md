@@ -10,6 +10,7 @@
   * [What Was Accomplished](#what-was-accomplished)
   * [Future Work](#future-work)
 * [Resources](#resources)
+* [License](#license)
 
 ## Project Description
 
@@ -117,3 +118,7 @@ I have several ideas for ways this project could be improved in the future:
 * [Stratified K Fold Cross Validation](https://www.geeksforgeeks.org/stratified-k-fold-cross-validation/)
 * [Lambda Layers](https://docs.aws.amazon.com/lambda/latest/dg/chapter-layers.html)
 * [Kaggle: SMS Spam Collection Dataset](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset)
+
+## License
+
+[AI Text Classifier Tool](https://github.com/JoshuaLanman/AI-Text-Classifier) © 2025 by [Joshua Lanman](https://github.com/JoshuaLanman/) is licensed under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/). You may download and use this code locally for personal purposes only. Commercial use, modification, or distribution is prohibited.

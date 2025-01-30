@@ -5,6 +5,7 @@
 * [Introduction](#introduction)
 * [Project Plan](#project-plan)
 * [Initial ChatGPT Prompt](#initial-chatgpt-prompt)
+* [License](#license)
 
 ## Introduction
 
@@ -170,3 +171,7 @@ Instructions
 1. Keep the overall project in mind at all times, even when we drill deeper into different aspects of the individual tools and implementation steps.
 
 Given all of this information, create a project plan that meets all of the Goals discussed above.
+
+## License
+
+[AI Text Classifier Tool](https://github.com/JoshuaLanman/AI-Text-Classifier) © 2025 by [Joshua Lanman](https://github.com/JoshuaLanman/) is licensed under [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International](https://creativecommons.org/licenses/by-nc-nd/4.0/). You may download and use this code locally for personal purposes only. Commercial use, modification, or distribution is prohibited.
